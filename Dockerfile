@@ -8,6 +8,7 @@ RUN sed -ri "s/\/\/archive/\/\/jp.archive/" /etc/apt/sources.list \
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	debian-keyring \
 	git \
 	wget \
 	build-essential \
