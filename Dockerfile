@@ -20,6 +20,8 @@ RUN apt-get update \
 	lib32ncurses5-dev \
 	software-properties-common \
 	apt-file \
+	openjdk-7-jre \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && apt-file update 
 
@@ -27,10 +29,15 @@ WORKDIR /tmp
 RUN wget -nv http://ftp.jaist.ac.jp/pub/GNU/automake/automake-1.15.tar.gz --directory-prefix=/tmp; wget -nv http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.xz --directory-prefix=/tmp
 
 WORKDIR /usr/local/src 
-RUN tar zxvf /tmp/automake-1.15.tar.gz \
+RUN tar Jxvf /tmp/autoconf-latest.tar.xz \
+	&& cd autoconf-2.69 \
+	&& ./configure \
+	&& make && make install \
+	&& cd .. \
+	&& tar zxvf /tmp/automake-1.15.tar.gz \
 	&& cd automake-1.15 \
 	&& ./configure \
-	&& make &&  make install \
+	&& make && make install \
 	&& cd .. \
 	&& tar Jxvf /tmp/autoconf-latest.tar.xz \
 	&& cd autoconf-2.69 \
@@ -39,6 +46,7 @@ RUN tar zxvf /tmp/automake-1.15.tar.gz \
 	&& cd .. \
 	&& git clone https://github.com/vim/vim.git \
 	&& cd vim \
-	&& ./configure && cd src && make && make install
+	&& ./configure && cd src && make && make install \
+	&& rm -f /tmp/*.gz /tmp/*.xz
 
 WORKDIR /

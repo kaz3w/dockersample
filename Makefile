@@ -11,12 +11,12 @@ build:
 	make base
 
 base:
-	@docker build --tag="$(mytagname):0.1" --file=Dockerfile .
+	@docker build --tag="$(mytagname):$(myver)" --file=Dockerfile .
 
 
 login:
 start:
-	@docker run -it -v /etc/localtime:/etc/localtime:ro $(mytagname):1.0 /bin/bash
+	@docker run -it $(mytagname):$(myver) /bin/bash
 
 clean:
 	@docker images | grep \<none\> | awk -F" " '{print $$3}' | xargs docker rmi 
