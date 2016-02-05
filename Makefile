@@ -14,9 +14,8 @@ base:
 	@docker build --tag="$(mytagname):$(myver)" --file=Dockerfile .
 
 
-login:
-start:
-	@docker run -it $(mytagname):$(myver) /bin/bash
+run:
+	@docker run -it --name ub1404_nase $(mytagname):$(myver) /bin/bash
 
 clean:
 	@docker images | grep \<none\> | awk -F" " '{print $$3}' | xargs docker rmi 

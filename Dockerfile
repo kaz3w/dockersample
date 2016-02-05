@@ -26,11 +26,11 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* \
  && apt-file update 
 
-WORKDIR /tmp
-RUN wget -nv http://ftp.jaist.ac.jp/pub/GNU/automake/automake-1.15.tar.gz --directory-prefix=/tmp; wget -nv http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.xz --directory-prefix=/tmp
+RUN cd /tmp \
+	&& wget -nv http://ftp.jaist.ac.jp/pub/GNU/automake/automake-1.15.tar.gz --directory-prefix=/tmp; wget -nv http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.xz --directory-prefix=/tmp
 
-WORKDIR /usr/local/src 
-RUN tar Jxvf /tmp/autoconf-latest.tar.xz \
+RUN cd /usr/local/src \
+	&& tar Jxvf /tmp/autoconf-latest.tar.xz \
 	&& cd autoconf-2.69 \
 	&& ./configure \
 	&& make && make install \
@@ -48,6 +48,9 @@ RUN tar Jxvf /tmp/autoconf-latest.tar.xz \
 	&& git clone https://github.com/vim/vim.git \
 	&& cd vim \
 	&& ./configure && cd src && make && make install \
-	&& rm -f /tmp/*.gz /tmp/*.xz
+	&& rm -f /tmp/*.gz /tmp/*.xz \
+	&& apt-get remove autoconf -y
+
 
 WORKDIR /
+

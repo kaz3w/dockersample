@@ -1,2 +1,2 @@
 # dockersample
-## docker sample
+* docker image Ubuntu 14.04 based
